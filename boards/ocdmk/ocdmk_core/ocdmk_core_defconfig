@@ -49,9 +49,8 @@ CONFIG_SETTINGS_NVS=y
 # Power management
 CONFIG_PM_DEVICE=y
 
-# Use DC/DC regulator for better power efficiency
+# Power driver (DC/DC configured via &reg1 in devicetree)
 CONFIG_NRFX_POWER=y
-CONFIG_SOC_DCDC_NRF52X=y
 
 # ZMK specific
 CONFIG_ZMK_USB=y
