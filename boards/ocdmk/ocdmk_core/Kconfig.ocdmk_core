@@ -3,6 +3,5 @@
 # SPDX-License-Identifier: MIT
 
 config BOARD_OCDMK_CORE
-    bool "OCDMK Core"
-    depends on SOC_NRF52833_QIAA
+    select SOC_NRF52833_QIAA
 
