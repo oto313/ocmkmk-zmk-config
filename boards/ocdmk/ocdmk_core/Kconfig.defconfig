@@ -1,0 +1,23 @@
+# OCDMK Core Board Default Configuration
+# Copyright (c) 2024 OCDMK Contributors
+# SPDX-License-Identifier: MIT
+
+if BOARD_OCDMK_CORE
+
+config ZMK_KEYBOARD_NAME
+    default "OCDMK"
+
+config USB_DEVICE_PRODUCT
+    default "OCDMK Core"
+
+config USB_DEVICE_VID
+    default 0x1D50
+
+config USB_DEVICE_PID
+    default 0x615E
+
+config USB_DEVICE_MANUFACTURER
+    default "OCDMK"
+
+endif # BOARD_OCDMK_CORE
+

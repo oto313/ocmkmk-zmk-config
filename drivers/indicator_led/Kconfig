@@ -1,0 +1,28 @@
+# Copyright (c) 2024 OCDMK Contributors
+# SPDX-License-Identifier: MIT
+
+config INDICATOR_LED
+    bool "Indicator LED driver"
+    default y
+    depends on GPIO
+    help
+      Enable indicator LED driver that lights LED when
+      STAT1 AND STAT2 signals are both high.
+
+if INDICATOR_LED
+
+config INDICATOR_LED_INIT_PRIORITY
+    int "Indicator LED init priority"
+    default 90
+    help
+      Indicator LED device driver initialization priority.
+
+config INDICATOR_LED_LOG_LEVEL
+    int "Indicator LED log level"
+    default 3
+    help
+      Log level for indicator LED driver.
+      0 = OFF, 1 = ERR, 2 = WRN, 3 = INF, 4 = DBG
+
+endif # INDICATOR_LED
+

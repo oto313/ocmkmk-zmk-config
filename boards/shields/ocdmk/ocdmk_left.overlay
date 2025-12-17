@@ -1,0 +1,21 @@
+/*
+ * OCDMK Left Shield Overlay
+ */
+
+#include "ocdmk.dtsi"
+
+&kscan {
+    /*
+     * Column pins using ocdmk_core connector (left side)
+     * C1=Pin17, C2=Pin16, C3=Pin2, C4=Pin3, C5=Pin6, C6=Pin7, C7=Pin12
+     */
+    col-gpios
+        = <&ocdmk_core 17 GPIO_ACTIVE_HIGH>  /* C1: P0.29 */
+        , <&ocdmk_core 16 GPIO_ACTIVE_HIGH>  /* C2: P0.28 */
+        , <&ocdmk_core 2 GPIO_ACTIVE_HIGH>   /* C3: P0.17 */
+        , <&ocdmk_core 3 GPIO_ACTIVE_HIGH>   /* C4: P0.20 */
+        , <&ocdmk_core 6 GPIO_ACTIVE_HIGH>   /* C5: P0.03 */
+        , <&ocdmk_core 7 GPIO_ACTIVE_HIGH>   /* C6: P0.02 */
+        , <&ocdmk_core 12 GPIO_ACTIVE_HIGH>  /* C7: P1.09 */
+        ;
+};

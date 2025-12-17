@@ -1,3 +1,9 @@
 build:
   settings:
     board_root: .
+    shield_root: .
+    dts_root: .
+  cmake-ext:
+    root: .
+  kconfig-ext:
+    root: .

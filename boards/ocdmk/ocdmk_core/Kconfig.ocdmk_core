@@ -1,0 +1,7 @@
+# OCDMK Core Board Configuration
+# Copyright (c) 2024 OCDMK Contributors
+# SPDX-License-Identifier: MIT
+
+config BOARD_OCDMK_CORE
+    select SOC_NRF52833_QIAA
+

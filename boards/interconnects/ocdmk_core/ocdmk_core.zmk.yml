@@ -1,0 +1,15 @@
+file_format: "1"
+id: ocdmk_core
+name: oCDMK Core
+type: interconnect
+url: https://github.com/oto313/ocmkmk
+manufacturer: oto
+description: |
+  OCDMK Core board
+node_labels:
+  gpio: ocdmk_core
+  i2c: ocdmk_core_i2c
+  spi: ocdmk_core_spi
+  uart: ocdmk_core_serial
+design_guideline: |
+  ZMK uses the blue color coded "Arduino" pin names to generate devicetree node references. For example, to refer to the pin labeled `0` in the diagram, use `&ocdmk_core 0` in the devicetree files.

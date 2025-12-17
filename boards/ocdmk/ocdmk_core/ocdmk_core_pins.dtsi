@@ -1,0 +1,48 @@
+/*
+ * Copyright (c) 2024 OCDMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * OCDMK Core nRF52833 Pin Definitions
+ */
+
+/ {
+    ocdmk_core: connector {
+        compatible = "ocdmk,core-connector";
+        #gpio-cells = <2>;
+        gpio-map-mask = <0xffffffff 0xffffffc0>;
+        gpio-map-pass-thru = <0 0x3f>;
+        gpio-map
+            = <1 0 &gpio0 15 0>     /* Pin 1:  P0.15 */
+            , <2 0 &gpio0 17 0>     /* Pin 2:  P0.17 */
+            , <3 0 &gpio0 20 0>     /* Pin 3:  P0.20 */
+            , <4 0 &gpio0 9 0>      /* Pin 4:  P0.09 */
+            , <5 0 &gpio0 10 0>     /* Pin 5:  P0.10 */
+            , <6 0 &gpio0 3 0>      /* Pin 6:  P0.03 */
+            , <7 0 &gpio0 2 0>      /* Pin 7:  P0.02 */
+            , <11 0 &gpio0 11 0>    /* Pin 11: P0.11 */
+            , <12 0 &gpio1 9 0>     /* Pin 12: P1.09 */
+            , <13 0 &gpio0 5 0>     /* Pin 13: P0.05 */
+            , <14 0 &gpio0 4 0>     /* Pin 14: P0.04 */
+            , <15 0 &gpio0 1 0>     /* Pin 15: P0.01 */
+            , <16 0 &gpio0 28 0>    /* Pin 16: P0.28 */
+            , <17 0 &gpio0 29 0>    /* Pin 17: P0.29 */
+            ;
+    };
+
+    /* BQ25185 Charger Status Inputs */
+    charger_status {
+        compatible = "gpio-keys";
+        
+        stat1: stat1 {
+            gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>;
+            label = "STAT1";
+        };
+        
+        stat2: stat2 {
+            gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
+            label = "STAT2";
+        };
+    };
+};
+

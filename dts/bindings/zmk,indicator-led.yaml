@@ -1,0 +1,25 @@
+# Copyright (c) 2024 OCDMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: |
+  Indicator LED that lights when STAT1 AND STAT2 are both high.
+  Used for battery charger status indication (BQ25185).
+
+compatible: "zmk,indicator-led"
+
+properties:
+  led-gpios:
+    type: phandle-array
+    required: true
+    description: GPIO connected to LED output (active high)
+
+  stat1-gpios:
+    type: phandle-array
+    required: true
+    description: GPIO connected to STAT1 input from charger
+
+  stat2-gpios:
+    type: phandle-array
+    required: true
+    description: GPIO connected to STAT2 input from charger
+

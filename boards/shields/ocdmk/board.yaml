@@ -1,0 +1,5 @@
+board:
+  name: ocdmk
+  vendor: oto
+  socs:
+    - name: nRF52833

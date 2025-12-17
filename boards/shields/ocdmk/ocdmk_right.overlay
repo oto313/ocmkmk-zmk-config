@@ -1,0 +1,25 @@
+/*
+ * OCDMK Right Shield Overlay
+ */
+
+#include "ocdmk.dtsi"
+
+&default_transform {
+    col-offset = <7>;
+};
+
+&kscan {
+    /*
+     * Column pins using ocdmk_core connector (FLIPPED for right side)
+     * Left Pin 17 → Right Pin 7, Left Pin 2 → Right Pin 12, etc.
+     */
+    col-gpios
+        = <&ocdmk_core 7 GPIO_ACTIVE_HIGH>   /* C1: was Pin17 → P0.02 */
+        , <&ocdmk_core 6 GPIO_ACTIVE_HIGH>   /* C2: was Pin16 → P0.03 */
+        , <&ocdmk_core 12 GPIO_ACTIVE_HIGH>  /* C3: was Pin2 → P1.09 */
+        , <&ocdmk_core 13 GPIO_ACTIVE_HIGH>  /* C4: was Pin3 → P0.05 */
+        , <&ocdmk_core 16 GPIO_ACTIVE_HIGH>  /* C5: was Pin6 → P0.28 */
+        , <&ocdmk_core 17 GPIO_ACTIVE_HIGH>  /* C6: was Pin7 → P0.29 */
+        , <&ocdmk_core 2 GPIO_ACTIVE_HIGH>   /* C7: was Pin12 → P0.17 */
+        ;
+};

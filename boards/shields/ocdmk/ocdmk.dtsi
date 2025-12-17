@@ -1,0 +1,62 @@
+/*
+ * OCDMK Shield - Shared Configuration
+ * 7 columns × 4 rows split keyboard matrix
+ */
+
+#include <dt-bindings/zmk/matrix_transform.h>
+
+#include "ocdmk-layouts.dtsi"
+
+/ {
+    chosen {
+        zmk,physical-layout = &default_layout;
+        zmk,kscan = &kscan;
+        zmk,matrix-transform = &default_transform;
+    };
+
+    /*
+     * Charging Status LED Indicator
+     * LED lights when STAT1=1 AND STAT2=1 (fault/no battery condition)
+     * STAT1: P0.00, STAT2: P0.31, LED_PWM: P0.30
+     */
+    charging_led: charging_indicator {
+        compatible = "zmk,indicator-led";
+        led-gpios = <&gpio0 30 GPIO_ACTIVE_HIGH>;
+        stat1-gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>;
+        stat2-gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
+    };
+
+    kscan: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        wakeup-source;
+
+        /*
+         * Row pins using ocdmk_core connector (active on both halves)
+         * R1=Pin5, R2=Pin4, R3=Pin11, R4=Pin15
+         */
+        row-gpios
+            = <&ocdmk_core 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* R1: P0.10 */
+            , <&ocdmk_core 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* R2: P0.09 */
+            , <&ocdmk_core 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* R3: P0.11 */
+            , <&ocdmk_core 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* R4: P0.01 */
+            ;
+    };
+
+    default_transform: default_transform {
+        compatible = "zmk,matrix-transform";
+        columns = <14>;  /* 7 cols × 2 halves */
+        rows = <4>;
+
+        /*
+         * Split keyboard matrix layout
+         * Left side: columns 0-6, Right side: columns 7-13
+         */
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5) RC(0,6)    RC(0,7) RC(0,8) RC(0,9) RC(0,10) RC(0,11) RC(0,12) RC(0,13)
+            RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5) RC(1,6)    RC(1,7) RC(1,8) RC(1,9) RC(1,10) RC(1,11) RC(1,12) RC(1,13)
+            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(2,6)    RC(2,7) RC(2,8) RC(2,9) RC(2,10) RC(2,11) RC(2,12) RC(2,13)
+            RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(3,6)    RC(3,7) RC(3,8) RC(3,9) RC(3,10) RC(3,11) RC(3,12) RC(3,13)
+        >;
+    };
+};
