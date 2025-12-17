@@ -1,7 +1,0 @@
-board:
-  name: ocdmk_core
-  full_name: OCDMK Core
-  vendor: ocdmk
-  socs:
-    - name: nrf52833
-
