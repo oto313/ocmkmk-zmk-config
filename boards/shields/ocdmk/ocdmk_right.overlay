@@ -4,22 +4,63 @@
 
 #include "ocdmk.dtsi"
 
+/* Charging LED output for right side (mirrored: Pin 1 → Pin 11) */
+&charging_led {
+    led-gpios = <&ocdmk_core 11 GPIO_ACTIVE_HIGH>;  /* Pin 11: P0.11 */
+};
+
 &default_transform {
     col-offset = <7>;
 };
 
 &kscan {
     /*
-     * Column pins using ocdmk_core connector (FLIPPED for right side)
+     * Row pins (right side - mirrored pinout)
+     * Left Pin 5 → Right Pin 15, Left Pin 4 → Right Pin 14, etc.
+     */
+    row-gpios
+        = <&ocdmk_core 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* R1: P0.01 (was Pin5) */
+        , <&ocdmk_core 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* R2: P0.04 (was Pin4) */
+        , <&ocdmk_core 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* R3: P0.15 (was Pin11) */
+        , <&ocdmk_core 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* R4: P0.10 (was Pin15) */
+        ;
+
+    /*
+     * Column pins (right side - mirrored)
      * Left Pin 17 → Right Pin 7, Left Pin 2 → Right Pin 12, etc.
      */
     col-gpios
-        = <&ocdmk_core 7 GPIO_ACTIVE_HIGH>   /* C1: was Pin17 → P0.02 */
-        , <&ocdmk_core 6 GPIO_ACTIVE_HIGH>   /* C2: was Pin16 → P0.03 */
-        , <&ocdmk_core 12 GPIO_ACTIVE_HIGH>  /* C3: was Pin2 → P1.09 */
-        , <&ocdmk_core 13 GPIO_ACTIVE_HIGH>  /* C4: was Pin3 → P0.05 */
-        , <&ocdmk_core 16 GPIO_ACTIVE_HIGH>  /* C5: was Pin6 → P0.28 */
-        , <&ocdmk_core 17 GPIO_ACTIVE_HIGH>  /* C6: was Pin7 → P0.29 */
-        , <&ocdmk_core 2 GPIO_ACTIVE_HIGH>   /* C7: was Pin12 → P0.17 */
+        = <&ocdmk_core 7 GPIO_ACTIVE_HIGH>   /* C1: P0.02 (was Pin17) */
+        , <&ocdmk_core 6 GPIO_ACTIVE_HIGH>   /* C2: P0.03 (was Pin16) */
+        , <&ocdmk_core 12 GPIO_ACTIVE_HIGH>  /* C3: P1.09 (was Pin2) */
+        , <&ocdmk_core 13 GPIO_ACTIVE_HIGH>  /* C4: P0.05 (was Pin3) */
+        , <&ocdmk_core 16 GPIO_ACTIVE_HIGH>  /* C5: P0.28 (was Pin6) */
+        , <&ocdmk_core 17 GPIO_ACTIVE_HIGH>  /* C6: P0.29 (was Pin7) */
+        , <&ocdmk_core 2 GPIO_ACTIVE_HIGH>   /* C7: P0.17 (was Pin12) */
         ;
+};
+
+/*
+ * UART for wired split (right side - mirrored)
+ * Due to PCB mirroring:
+ *   Left Pin 13 (P0.05, TX) → Right Pin 3 position (P0.20) = RX
+ *   Left Pin 14 (P0.04, RX) → Right Pin 4 position (P0.09) = TX
+ *
+ * With a straight-through cable, TX↔RX automatically cross!
+ */
+&pinctrl {
+    uart0_default: uart0_default {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 0, 9)>,   /* P0.09 (Pin 4 position) */
+                    <NRF_PSEL(UART_RX, 0, 20)>;  /* P0.20 (Pin 3 position) */
+        };
+    };
+
+    uart0_sleep: uart0_sleep {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 0, 9)>,
+                    <NRF_PSEL(UART_RX, 0, 20)>;
+            low-power-enable;
+        };
+    };
 };

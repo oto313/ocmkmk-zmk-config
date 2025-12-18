@@ -30,19 +30,20 @@
             ;
     };
 
-    /* BQ25185 Charger Status Inputs */
-    charger_status {
-        compatible = "gpio-keys";
-        
-        stat1: stat1 {
-            gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>;
-            label = "STAT1";
-        };
-        
-        stat2: stat2 {
-            gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
-            label = "STAT2";
-        };
+    /*
+     * BQ25185 Charger Status GPIO Nexus
+     * Provides referenceable pins for charger status signals
+     * Usage: <&ocdmk_charger 0 flags> for STAT1, <&ocdmk_charger 1 flags> for STAT2
+     */
+    ocdmk_charger: charger_gpio {
+        compatible = "gpio-nexus";
+        #gpio-cells = <2>;
+        gpio-map-mask = <0xffffffff 0xffffffc0>;
+        gpio-map-pass-thru = <0 0x3f>;
+        gpio-map
+            = <0 0 &gpio0 0 0>      /* STAT1: P0.00 */
+            , <1 0 &gpio0 31 0>     /* STAT2: P0.31 */
+            ;
     };
 };
 
