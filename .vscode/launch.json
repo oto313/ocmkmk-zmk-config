@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug OCDMK Left (J-Link)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "jlink",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/zmk/app/build/zephyr/zmk.elf",
+            "device": "nRF52833_xxAA",
+            "interface": "swd",
+            "svdFile": "${workspaceRoot}/zephyr/modules/hal/nordic/nrfx/mdk/nrf52833.svd",
+            "preLaunchTask": "",
+            "showDevDebugOutput": "parsed",
+            "runToEntryPoint": "main",
+            "resetType": "init"
+        },
+        {
+            "name": "Attach OCDMK Left (J-Link)",
+            "type": "cortex-debug",
+            "request": "attach",
+            "servertype": "jlink",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/zmk/app/build/zephyr/zmk.elf",
+            "device": "nRF52833_xxAA",
+            "interface": "swd",
+            "svdFile": "${workspaceRoot}/zephyr/modules/hal/nordic/nrfx/mdk/nrf52833.svd"
+        }
+    ]
+}
+

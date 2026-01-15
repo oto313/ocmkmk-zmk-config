@@ -1,0 +1,77 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build OCDMK Left",
+            "type": "shell",
+            "command": "west",
+            "args": [
+                "build",
+                "-s",
+                "${workspaceFolder}/zmk/app",
+                "-b",
+                "ocdmk_core",
+                "-S", "studio-rpc-usb-uart",
+                "--",
+                "-DSHIELD=ocdmk_left",
+                "-DZMK_CONFIG=${workspaceFolder}",
+                "-DZMK_EXTRA_MODULES=${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/zmk/app"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build OCDMK Left (Pristine)",
+            "type": "shell",
+            "command": "west",
+            "args": [
+                "build",
+                "-p",
+                "-s",
+                "zmk/app",
+                "-b",
+                "ocdmk_core",
+                "--",
+                "-DSHIELD=ocdmk_left",
+                "-DZMK_CONFIG=${workspaceFolder}",
+                "-DZMK_EXTRA_MODULES=${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/zmk/app"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash OCDMK Left (J-Link)",
+            "type": "shell",
+            "command": "west",
+            "args": [
+                "flash",
+                "--runner",
+                "jlink"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/zmk/app"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build and Flash OCDMK Left",
+            "dependsOn": [
+                "Build OCDMK Left",
+                "Flash OCDMK Left (J-Link)"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+    ]
+}
+
+

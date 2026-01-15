@@ -1,2 +1,5 @@
 
 .zmk/
+zephyr
+build
+modules

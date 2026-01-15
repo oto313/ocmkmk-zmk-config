@@ -17,26 +17,28 @@
     /*
      * Row pins (right side - mirrored pinout)
      * Left Pin 5 → Right Pin 15, Left Pin 4 → Right Pin 14, etc.
+     * Rows are OUTPUTS (driven high) for row2col diode direction
      */
     row-gpios
-        = <&ocdmk_core 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* R1: P0.01 (was Pin5) */
-        , <&ocdmk_core 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* R2: P0.04 (was Pin4) */
-        , <&ocdmk_core 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* R3: P0.15 (was Pin11) */
-        , <&ocdmk_core 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* R4: P0.10 (was Pin15) */
+        = <&ocdmk_core 5 GPIO_ACTIVE_HIGH>   /* R1: P0.10 */
+        , <&ocdmk_core 4 GPIO_ACTIVE_HIGH>   /* R2: P0.09 */
+        , <&ocdmk_core 11 GPIO_ACTIVE_HIGH>  /* R3: P0.11 */
+        , <&ocdmk_core 15 GPIO_ACTIVE_HIGH>  /* R4: P0.01 */
         ;
 
     /*
      * Column pins (right side - mirrored)
      * Left Pin 17 → Right Pin 7, Left Pin 2 → Right Pin 12, etc.
+     * Columns are INPUTS (with pull-down) for row2col diode direction
      */
     col-gpios
-        = <&ocdmk_core 7 GPIO_ACTIVE_HIGH>   /* C1: P0.02 (was Pin17) */
-        , <&ocdmk_core 6 GPIO_ACTIVE_HIGH>   /* C2: P0.03 (was Pin16) */
-        , <&ocdmk_core 12 GPIO_ACTIVE_HIGH>  /* C3: P1.09 (was Pin2) */
-        , <&ocdmk_core 13 GPIO_ACTIVE_HIGH>  /* C4: P0.05 (was Pin3) */
-        , <&ocdmk_core 16 GPIO_ACTIVE_HIGH>  /* C5: P0.28 (was Pin6) */
-        , <&ocdmk_core 17 GPIO_ACTIVE_HIGH>  /* C6: P0.29 (was Pin7) */
-        , <&ocdmk_core 2 GPIO_ACTIVE_HIGH>   /* C7: P0.17 (was Pin12) */
+        = <&ocdmk_core 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* C1: P0.29 */
+        , <&ocdmk_core 16 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* C2: P0.28 */
+        , <&ocdmk_core 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* C3: P0.17 */
+        , <&ocdmk_core 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* C4: P0.20 */
+        , <&ocdmk_core 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* C5: P0.03 */
+        , <&ocdmk_core 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   /* C6: P0.02 */
+        , <&ocdmk_core 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* C7: P1.09 */
         ;
 };
 
