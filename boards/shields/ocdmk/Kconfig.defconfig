@@ -13,4 +13,9 @@ if SHIELD_OCDMK_LEFT || SHIELD_OCDMK_RIGHT
 config ZMK_SPLIT
     default y
 
+config ZMK_BACKLIGHT
+    default y
+    select PWM
+    select LED_PWM
+
 endif # SHIELD_OCDMK_LEFT || SHIELD_OCDMK_RIGHT

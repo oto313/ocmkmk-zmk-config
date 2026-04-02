@@ -19,5 +19,15 @@ config USB_DEVICE_PID
 config USB_DEVICE_MANUFACTURER
     default "OCDMK"
 
+if ZMK_BACKLIGHT
+
+config PWM
+    default y
+
+config LED_PWM
+    default y
+
+endif # ZMK_BACKLIGHT
+
 endif # BOARD_OCDMK_CORE
 

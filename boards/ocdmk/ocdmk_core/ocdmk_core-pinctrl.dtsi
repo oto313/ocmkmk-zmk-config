@@ -11,6 +11,8 @@
     pwm0_default: pwm0_default {
         group1 {
             psels = <NRF_PSEL(PWM_OUT0, 0, 30)>;
+            /* Maximum drive strength (H0H1) for better signal quality */
+            nordic,drive-mode = <NRF_DRIVE_H0H1>;
         };
     };
 
