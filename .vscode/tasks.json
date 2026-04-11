@@ -7,11 +7,14 @@
             "command": "west",
             "args": [
                 "build",
+                "-d",
+                "build_ocdmk_left",
                 "-s",
                 "${workspaceFolder}/zmk/app",
                 "-b",
                 "ocdmk_core",
-                "-S", "studio-rpc-usb-uart",
+                "-S",
+                "studio-rpc-usb-uart",
                 "--",
                 "-DSHIELD=ocdmk_left",
                 "-DZMK_CONFIG=${workspaceFolder}",
@@ -33,8 +36,10 @@
             "args": [
                 "build",
                 "-p",
+                "-d",
+                "build_ocdmk_left",
                 "-s",
-                "zmk/app",
+                "${workspaceFolder}/zmk/app",
                 "-b",
                 "ocdmk_core",
                 "--",
@@ -54,6 +59,8 @@
             "command": "west",
             "args": [
                 "flash",
+                "-d",
+                "build_ocdmk_left",
                 "--runner",
                 "jlink"
             ],
@@ -70,7 +77,57 @@
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "Build OCDMK Right",
+            "type": "shell",
+            "command": "west",
+            "args": [
+                "build",
+                "-d",
+                "build_ocdmk_right",
+                "-s",
+                "${workspaceFolder}/zmk/app",
+                "-b",
+                "ocdmk_core",
+                "-S",
+                "studio-rpc-usb-uart",
+                "--",
+                "-DSHIELD=ocdmk_right",
+                "-DZMK_CONFIG=${workspaceFolder}",
+                "-DZMK_EXTRA_MODULES=${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/zmk/app"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash OCDMK Right (J-Link)",
+            "type": "shell",
+            "command": "west",
+            "args": [
+                "flash",
+                "-d",
+                "build_ocdmk_right",
+                "--runner",
+                "jlink"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/zmk/app"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build and Flash OCDMK Right",
+            "dependsOn": [
+                "Build OCDMK Right",
+                "Flash OCDMK Right (J-Link)"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
     ]
 }
 

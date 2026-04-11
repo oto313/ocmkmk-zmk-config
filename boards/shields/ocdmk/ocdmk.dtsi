@@ -12,12 +12,16 @@
         zmk,physical-layout = &default_layout;
         zmk,kscan = &kscan;
         zmk,matrix-transform = &default_transform;
-        
-        /*
-         * WIRED SPLIT: Uncomment the line below when using CONFIG_ZMK_SPLIT_SERIAL=y
-         * This enables UART communication between keyboard halves via pins 13/14 (TX/RX)
-         */
-        // zmk,split-serial = &ocdmk_core_serial;
+    };
+
+    /*
+     * Wired split: UART between halves (pinctrl: left/right overlays).
+     * Without this node, only BLE split runs; peripheral then hits
+     * bt_gatt_notify → -ENOTCONN (-128) when not paired over BLE.
+     */
+    wired_split {
+        compatible = "zmk,wired-split";
+        device = <&ocdmk_core_serial>;
     };
 
     /*

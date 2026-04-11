@@ -3,3 +3,7 @@
 zephyr
 build
 modules
+
+# Per-shield Zephyr build dirs (see .vscode/tasks.json)
+zmk/app/build_ocdmk_left/
+zmk/app/build_ocdmk_right/

@@ -19,3 +19,4 @@ config ZMK_BACKLIGHT
     select LED_PWM
 
 endif # SHIELD_OCDMK_LEFT || SHIELD_OCDMK_RIGHT
+

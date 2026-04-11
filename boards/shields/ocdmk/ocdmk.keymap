@@ -16,18 +16,17 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            /* Test keymap: Each key outputs unique character for column mapping
-             * Left side columns 0-6, Right side columns 7-13
-             * Row 0: a b c d e | f g h i j
-             * Row 1: k l m n o p q | r s t u v w x
-             * Row 2: y z 0 1 2 3 4 | 5 6 7 8 9 - =
-             * Row 3: [ ] \ | ; ' ENTER
+            /* Left: cols 0–6, right: 7–13 (per default_transform + right col-offset).
+             * Row 0: BL Q W E R T PGUP | Y U I O P [ BL
+             * Row 1: MO A S D F G PGDN | R S T U V W X
+             * Row 2: Z X C V B | 3 4 5 6 7
+             * Row 3: BSPC ENT SPC | ; ' ENT
              */
             bindings = <
-                &bl BL_TOG  &kp Q  &kp W   &kp E     &kp R     &kp T     &kp PAGE_UP            &kp H     &kp I     &kp J     &kp H     &kp I     &kp J    &kp J
-                &mo 1       &kp A       &kp S        &kp D     &kp F     &kp G     &kp PAGE_DOWN          &kp R     &kp S     &kp T     &kp U     &kp V     &kp W     &kp X
-                            &kp Z        &kp X     &kp C    &kp V    &kp B                          &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    
-                &kp BACKSPACE    &kp ENTER  &kp SPACE                                                                                       &kp SEMI  &kp SQT   &kp ENTER
+                &bl BL_TOG  &kp Q  &kp W   &kp E     &kp R     &kp T     &kp PAGE_UP                        &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT   &bl BL_TOG
+                &mo 1       &kp A       &kp S        &kp D     &kp F     &kp G     &kp PAGE_DOWN            &kp R     &kp S     &kp T     &kp U     &kp V     &kp W    &kp X
+                            &kp Z        &kp X     &kp C    &kp V    &kp B                                            &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    
+                &kp BACKSPACE    &kp ENTER  &kp SPACE                                                                                               &kp SEMI  &kp SQT  &kp ENTER
             >;
         };
 
@@ -39,7 +38,7 @@
              * Row 3: | | | | | | |
              */
             bindings = <
-                        &bl BL_INC   &bl BL_DEC     &kp HASH   &kp DLLR   &kp PRCNT        &kp CARET  &kp AMPS   &kp STAR   &kp LPAR   &kp RPAR
+                &bl BL_INC   &bl BL_DEC   &kp HASH   &kp DLLR   &kp PRCNT   &kp CARET   &kp AMPS   &kp STAR   &kp LPAR   &kp RPAR   &kp PLUS   &kp UNDER   &kp COLON   &kp DQT
                 &kp RPAR  &kp UNDER  &kp PLUS   &kp LBRC  &kp RBRC  &kp PIPE  &kp COLON &kp DQT     &kp LT     &kp GT     &kp QMARK  &kp TILDE  &kp GRAVE  &kp PIPE
                 &kp TILDE &kp GRAVE &kp PIPE  &kp RBRC  &kp LBRC  &kp PIPE  &kp PIPE &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE  &kp PIPE
                 &kp PIPE  &kp PIPE   &kp PIPE                                                                     &kp PIPE  &kp PIPE  &kp PIPE

@@ -19,14 +19,18 @@
         zephyr,console = &uart0;
         zephyr,code-partition = &code_partition;
         zmk,backlight = &backlight;
+        zmk,battery = &vbatt;
     };
 
     backlight: pwmleds {
         compatible = "pwm-leds";
         pwm_led_0 {
             /* 500kHz switching frequency */
-            pwms = <&pwm0 0 PWM_KHZ(500) PWM_POLARITY_NORMAL>;
+            pwms = <&pwm0 0 PWM_HZ(60) PWM_POLARITY_NORMAL>;
         };
+    };
+    vbatt: vbatt {
+        compatible = "zmk,battery-nrf-vddh";
     };
 };
 
@@ -52,6 +56,11 @@
     pinctrl-0 = <&pwm0_default>;
     pinctrl-1 = <&pwm0_sleep>;
     pinctrl-names = "default", "sleep";
+};
+
+/* SAADC: required for zmk,battery-nrf-vddh (VDDHDIV5 internal sense) */
+&adc {
+    status = "okay";
 };
 
 /* UART with node label for interconnect */
