@@ -9,71 +9,69 @@ jobs:
     name: Create DFU packages
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        artifact: [ocdmk_left_ble, ocdmk_right_ble]
     steps:
       - name: Download firmware artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.artifact }}
+          name: firmware
           path: firmware
 
       - name: Install adafruit-nrfutil
         run: pip install adafruit-nrfutil
 
-      - name: Convert UF2 to BIN
+      - name: Convert UF2 to BIN and create DFU packages
         run: |
           python3 - <<'EOF'
           import struct, sys, os
 
-          uf2_path = "firmware/zmk.uf2"
-          bin_path = "firmware/zmk.bin"
-
           UF2_MAGIC0 = 0x0A324655
           UF2_MAGIC1 = 0x9E5D5157
-          UF2_MAGIC2 = 0x0AB16F30
 
-          blocks = []
-          with open(uf2_path, "rb") as f:
-              while True:
-                  block = f.read(512)
-                  if len(block) < 512:
-                      break
-                  magic0, magic1, flags, target_addr, payload_size, block_no, num_blocks, file_size = \
-                      struct.unpack_from("<IIIIIIII", block, 0)
-                  if magic0 != UF2_MAGIC0 or magic1 != UF2_MAGIC1:
-                      continue
-                  blocks.append((target_addr, block[32:32+payload_size]))
+          def uf2_to_bin(uf2_path, bin_path):
+              blocks = []
+              with open(uf2_path, "rb") as f:
+                  while True:
+                      block = f.read(512)
+                      if len(block) < 512:
+                          break
+                      magic0, magic1, flags, target_addr, payload_size = \
+                          struct.unpack_from("<IIIII", block, 0)
+                      if magic0 != UF2_MAGIC0 or magic1 != UF2_MAGIC1:
+                          continue
+                      blocks.append((target_addr, block[32:32+payload_size]))
+              if not blocks:
+                  print(f"No valid UF2 blocks in {uf2_path}", file=sys.stderr)
+                  sys.exit(1)
+              blocks.sort(key=lambda x: x[0])
+              base_addr = blocks[0][0]
+              end_addr = max(addr + len(data) for addr, data in blocks)
+              binary = bytearray(end_addr - base_addr)
+              for addr, data in blocks:
+                  binary[addr - base_addr:addr - base_addr + len(data)] = data
+              with open(bin_path, "wb") as f:
+                  f.write(binary)
+              print(f"  {uf2_path} -> {bin_path} ({len(binary)} bytes, base 0x{base_addr:08x})")
 
-          if not blocks:
-              print("No valid UF2 blocks found", file=sys.stderr)
-              sys.exit(1)
-
-          blocks.sort(key=lambda x: x[0])
-          base_addr = blocks[0][0]
-          end_addr = max(addr + len(data) for addr, data in blocks)
-          binary = bytearray(end_addr - base_addr)
-          for addr, data in blocks:
-              offset = addr - base_addr
-              binary[offset:offset+len(data)] = data
-
-          with open(bin_path, "wb") as f:
-              f.write(binary)
-
-          print(f"Converted {uf2_path} -> {bin_path} ({len(binary)} bytes, base 0x{base_addr:08x})")
+          for name in ["ocdmk_left_ble", "ocdmk_right_ble"]:
+              uf2 = f"firmware/{name}.uf2"
+              bin_ = f"firmware/{name}.bin"
+              print(f"Converting {name}...")
+              uf2_to_bin(uf2, bin_)
           EOF
 
-      - name: Create DFU package
+      - name: Create DFU packages
         run: |
-          adafruit-nrfutil dfu genpkg \
-            --dev-type 0x0052 \
-            --application firmware/zmk.bin \
-            --application-version 1 \
-            ${{ matrix.artifact }}_dfu.zip
+          for name in ocdmk_left_ble ocdmk_right_ble; do
+            echo "Packaging $name..."
+            adafruit-nrfutil dfu genpkg \
+              --dev-type 0x0052 \
+              --application firmware/${name}.bin \
+              --application-version 1 \
+              ${name}_dfu.zip
+          done
 
-      - name: Upload DFU package
+      - name: Upload DFU packages
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact }}_dfu
-          path: ${{ matrix.artifact }}_dfu.zip
+          name: firmware_dfu
+          path: "*_dfu.zip"
