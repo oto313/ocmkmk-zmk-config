@@ -1,0 +1,4 @@
+config ZMK_BEHAVIOR_BOOTLOADER
+    bool "OCDMK bootloader jump behavior"
+    default y
+    depends on RETENTION_BOOT_MODE
