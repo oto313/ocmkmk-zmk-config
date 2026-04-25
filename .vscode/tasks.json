@@ -4,7 +4,7 @@
         {
             "label": "Build OCDMK Left",
             "type": "shell",
-            "command": "west build -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder} -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -17,7 +17,7 @@
         {
             "label": "Build OCDMK Left (Pristine)",
             "type": "shell",
-            "command": "west build -p -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder} -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -p -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -52,7 +52,17 @@
         {
             "label": "Build OCDMK Right",
             "type": "shell",
-            "command": "west build -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder} -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "options": {
+                "cwd": "${workspaceFolder}/zmk/app"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build OCDMK Right (Pristine)",
+            "type": "shell",
+            "command": "west build -p -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -96,10 +106,11 @@
             "type": "pickString",
             "description": "Split transport (applies to both halves)",
             "options": [
-                {"label": "Wired (no BLE)", "value": ""},
-                {"label": "BLE split",      "value": "-DCONFIG_ZMK_BLE=y"}
+                {"label": "Wired (no BLE)", "value": "-DCONFIG_ZMK_STUDIO=y "},
+                {"label": "BLE split",      "value": "-DCONFIG_ZMK_BLE=y -DCONFIG_ZMK_SPLIT_WIRED=n -DCONFIG_ZMK_STUDIO=y "}
             ],
             "default": ""
         }
     ]
 }
+yooggtgtyxdcdcd
