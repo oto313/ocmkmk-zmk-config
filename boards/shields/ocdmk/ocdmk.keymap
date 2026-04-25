@@ -8,6 +8,13 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/backlight.h>
 / {
+    behaviors {
+        bootload_uf2: bootload_uf2 {
+            compatible = "zmk,behavior-bootloader";
+            #binding-cells = <0>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -37,7 +44,7 @@
                 &bl BL_INC   &bl BL_DEC   &kp HASH   &kp DLLR   &kp PRCNT   &kp CARET   &kp AMPS           &kp STAR   &kp LPAR   &kp RPAR   &kp PLUS   &kp UNDER   &kp COLON   &kp DQT
                 &kp RPAR  &kp UNDER  &kp PLUS   &kp LBRC  &kp RBRC  &kp PIPE  &kp COLON &kp DQT            &kp LT     &kp GT     &kp QMARK  &kp TILDE  &kp GRAVE  &kp PIPE
                             &kp GRAVE &kp PIPE  &kp RBRC  &kp LBRC  &kp PIPE                                              &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE
-                &studio_unlock  &kp PIPE   &kp PIPE                                                                     &kp PIPE  &kp PIPE  &kp PIPE
+                &studio_unlock  &kp PIPE   &bootload_uf2                                                                &kp PIPE  &kp PIPE  &kp PIPE
             >;
         };
     };

@@ -6,6 +6,7 @@
 
 /dts-v1/;
 #include <nordic/nrf52833_qiaa.dtsi>
+#include <common/nordic/nrf52833_uf2_boot_mode.dtsi>
 #include "ocdmk_core_pins.dtsi"
 #include "ocdmk_core-pinctrl.dtsi"
 

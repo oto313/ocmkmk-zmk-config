@@ -4,4 +4,11 @@
 
 config BOARD_OCDMK_CORE
     select SOC_NRF52833_QIAA
+    imply RETAINED_MEM
+    imply RETENTION
+    imply RETENTION_BOOT_MODE
+
+config OCDMK_DEBUG
+    bool "Enable OCDMK debug logging (RTT + stack diagnostics)"
+    default n
 

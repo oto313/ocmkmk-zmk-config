@@ -33,6 +33,7 @@ west build -s zmk/app -d build/left_ble -b ocdmk_core/nrf52833 -- \
   -DSNIPPET=studio-rpc-usb-uart \
   -DCONFIG_ZMK_STUDIO=y \
   -DCONFIG_ZMK_BLE=y \
+
   -DZMK_CONFIG=$(pwd)/config
 ```
 
@@ -41,6 +42,7 @@ west build -s zmk/app -d build/left_ble -b ocdmk_core/nrf52833 -- \
 west build -s zmk/app -d build/right_ble -b ocdmk_core/nrf52833 -- \
   -DSHIELD=ocdmk_right \
   -DCONFIG_ZMK_BLE=y \
+
   -DZMK_CONFIG=$(pwd)/config
 ```
 
@@ -52,7 +54,33 @@ west flash -d build/left_ble  # BLE left
 west flash -d build/right_ble # BLE right
 ```
 
+`west flash` defaults to the UF2 runner (drag-and-drop via Adafruit bootloader). Use `-r jlink` to force JLink instead.
+
 The `build.yaml` at the repo root defines the GitHub Actions CI matrix (same two targets).
+
+### Flashing the bootloader (first time / recovery)
+
+The board runs the [Adafruit nRF52 Bootloader](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases) (`bluemicro_nrf52833` variant, S140 SoftDevice). This only needs to be flashed once via JLink/nrfjprog; afterwards UF2 handles firmware updates.
+
+**With nrfjprog:**
+```sh
+nrfjprog --program bluemicro_nrf52833_bootloader-0.10.0_s140_7.2.0.hex \
+  --chiperase --verify -f NRF52 --reset
+```
+
+**With JLink:**
+```sh
+JLinkExe -device nRF52833_xxAA -if SWD -speed 4000 -autoconnect 1 << 'EOF'
+h
+erase
+loadfile bluemicro_nrf52833_bootloader-0.10.0_s140_7.2.0.hex
+r
+g
+exit
+EOF
+```
+
+After flashing, double-tap reset to enter UF2 mode (board mounts as USB drive).
 
 ## Repository Layout
 

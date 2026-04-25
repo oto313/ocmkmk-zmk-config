@@ -29,5 +29,46 @@ config LED_PWM
 
 endif # ZMK_BACKLIGHT
 
+if OCDMK_DEBUG
+
+config DEBUG
+    default y
+
+config DEBUG_INFO
+    default y
+
+config LOG
+    default y
+
+config USE_SEGGER_RTT
+    default y
+
+config LOG_BACKEND_RTT
+    default y
+
+config LOG_BACKEND_UART
+    default n
+
+config LOG_PRINTK
+    default n
+
+config SEGGER_RTT_BUFFER_SIZE_UP
+    default 8096
+
+choice SEGGER_RTT_MODE
+    default SEGGER_RTT_MODE_BLOCK_IF_FIFO_FULL
+endchoice
+
+config LOG_BUFFER_SIZE
+    default 2048
+
+config STACK_SENTINEL
+    default y
+
+config THREAD_STACK_INFO
+    default y
+
+endif # OCDMK_DEBUG
+
 endif # BOARD_OCDMK_CORE
 

@@ -2,4 +2,5 @@
 # SPDX-License-Identifier: MIT
 
 rsource "drivers/Kconfig"
+rsource "behaviors/Kconfig"
 

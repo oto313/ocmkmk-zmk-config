@@ -1,0 +1,7 @@
+description: >
+  Jump to bootloader: writes 0x57 (USB UF2) or 0xA8 (OTA BLE DFU) to
+  GPREGRET depending on whether CONFIG_ZMK_BLE is set, then warm-reboots.
+
+compatible: "zmk,behavior-bootloader"
+
+include: zero_param.yaml

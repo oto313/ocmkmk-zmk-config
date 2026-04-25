@@ -93,6 +93,27 @@
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
+        },
+        {
+            "label": "Create DFU Package (Left)",
+            "type": "shell",
+            "command": "adafruit-nrfutil dfu genpkg --dev-type 0x0052 --application ${workspaceFolder}/zmk/app/build_ocdmk_left/zephyr/zmk.bin --application-version 1 ${workspaceFolder}/firmware_left_ble.zip && echo 'Created firmware_left_ble.zip'",
+            "problemMatcher": []
+        },
+        {
+            "label": "Create DFU Package (Right)",
+            "type": "shell",
+            "command": "adafruit-nrfutil dfu genpkg --dev-type 0x0052 --application ${workspaceFolder}/zmk/app/build_ocdmk_right/zephyr/zmk.bin --application-version 1 ${workspaceFolder}/firmware_right_ble.zip && echo 'Created firmware_right_ble.zip'",
+            "problemMatcher": []
+        },
+        {
+            "label": "Create DFU Packages (Both)",
+            "dependsOn": [
+                "Create DFU Package (Left)",
+                "Create DFU Package (Right)"
+            ],
+            "dependsOrder": "parallel",
+            "problemMatcher": []
         }
     ],
 
@@ -113,4 +134,3 @@
         }
     ]
 }
-yooggtgtyxdcdcd
