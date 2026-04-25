@@ -36,22 +36,25 @@
         ;
 };
 
-/*
+/*gt
  * UART wired split — left (central): connector pins 3 / 4 → P0.20 (TX) / P0.09 (RX)
  * Cable to right: Left pin 3 (TX) → Right pin 13 (RX); Left pin 4 (RX) → Right pin 14 (TX)
  */
 &pinctrl {
     uart0_default: uart0_default {
         group1 {
-            psels = <NRF_PSEL(UART_TX, 0, 20)>,
-                    <NRF_PSEL(UART_RX, 0, 9)>;
+            psels = <NRF_PSEL(UART_RX, 0, 20)>;
+            bias-pull-up;
+        };
+        group2 {
+            psels = <NRF_PSEL(UART_TX, 0, 9)>;
         };
     };
 
     uart0_sleep: uart0_sleep {
         group1 {
-            psels = <NRF_PSEL(UART_TX, 0, 20)>,
-                    <NRF_PSEL(UART_RX, 0, 9)>;
+            psels = <NRF_PSEL(UART_RX, 0, 9)>,
+                    <NRF_PSEL(UART_TX, 0, 20)>;
             low-power-enable;
         };
     };

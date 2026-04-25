@@ -6,9 +6,9 @@
 # `artifact-name` to assign a name to distinguish build outputs from each other.
 ---
 include:
-  - board: ocdmk_core
+  - board: ocdmk_core/nrf52833
     shield: ocdmk_left
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y
-  - board: ocdmk_core
+  - board: ocdmk_core/nrf52833
     shield: ocdmk_right

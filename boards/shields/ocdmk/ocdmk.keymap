@@ -40,7 +40,7 @@
             bindings = <
                 &bl BL_INC   &bl BL_DEC   &kp HASH   &kp DLLR   &kp PRCNT   &kp CARET   &kp AMPS   &kp STAR   &kp LPAR   &kp RPAR   &kp PLUS   &kp UNDER   &kp COLON   &kp DQT
                 &kp RPAR  &kp UNDER  &kp PLUS   &kp LBRC  &kp RBRC  &kp PIPE  &kp COLON &kp DQT     &kp LT     &kp GT     &kp QMARK  &kp TILDE  &kp GRAVE  &kp PIPE
-                &kp TILDE &kp GRAVE &kp PIPE  &kp RBRC  &kp LBRC  &kp PIPE  &kp PIPE &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE  &kp PIPE
+                            &kp GRAVE &kp PIPE  &kp RBRC  &kp LBRC  &kp PIPE                                              &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE     &kp PIPE
                 &kp PIPE  &kp PIPE   &kp PIPE                                                                     &kp PIPE  &kp PIPE  &kp PIPE
             >;
         };
