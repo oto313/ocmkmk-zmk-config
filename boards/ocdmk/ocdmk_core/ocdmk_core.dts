@@ -16,7 +16,6 @@
     chosen {
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
-        zephyr,console = &uart0;
         zephyr,code-partition = &code_partition;
         zmk,backlight = &backlight;
         zmk,battery = &vbatt;
@@ -63,14 +62,15 @@
     status = "okay";
 };
 
-/* UART with node label for interconnect */
+/*
+ * UART for wired split interconnect.
+ * Disabled by default; the left/right shield overlays enable it
+ * (with per-side pinctrl) when building without CONFIG_ZMK_BLE.
+ */
 ocdmk_core_serial: &uart0 {
     compatible = "nordic,nrf-uarte";
-    status = "okay";
+    status = "disabled";
     current-speed = <115200>;
-    pinctrl-0 = <&uart0_default>;
-    pinctrl-1 = <&uart0_sleep>;
-    pinctrl-names = "default", "sleep";
     stop-bits = "1";
     data-bits = <0x8>;
 };
@@ -94,7 +94,7 @@ zephyr_udc0: &usbd {
         sd_partition: partition@0 {
             reg = <0x00000000 0x00027000>;
         };
-        code_partition: partition@26000 {
+        code_partition: partition@27000 {
             reg = <0x00027000 0x00045000>;
         };
 
@@ -107,7 +107,7 @@ zephyr_udc0: &usbd {
          * Storage partition will be used by FCB/LittleFS/NVS
          * if enabled.
          */
-        storage_partition: partition@6000 {
+        storage_partition: partition@6c000 {
             reg = <0x0006c000 0x00008000>;
         };
     };

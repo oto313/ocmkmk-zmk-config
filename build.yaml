@@ -6,9 +6,25 @@
 # `artifact-name` to assign a name to distinguish build outputs from each other.
 ---
 include:
+  # === WIRED SPLIT (no BLE radio, UART cable between halves) ===
   - board: ocdmk_core/nrf52833
     shield: ocdmk_left
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y
+    artifact-name: ocdmk_left_wired
+
   - board: ocdmk_core/nrf52833
     shield: ocdmk_right
+    artifact-name: ocdmk_right_wired
+
+  # === BLE SPLIT (wireless between halves, USB to host on left) ===
+  - board: ocdmk_core/nrf52833
+    shield: ocdmk_left
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_BLE=y -DCONFIG_ZMK_SPLIT_WIRED=n
+    artifact-name: ocdmk_left_ble
+
+  - board: ocdmk_core/nrf52833
+    shield: ocdmk_right
+    cmake-args: -DCONFIG_ZMK_BLE=y -DCONFIG_ZMK_SPLIT_WIRED=n
+    artifact-name: ocdmk_right_ble

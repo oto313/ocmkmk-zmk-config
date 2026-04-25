@@ -3,14 +3,10 @@
  * 7×4 split keyboard (14 columns total)
  */
 
-/* Keep all behaviors to ensure backlight behavior is available */
-#define ZMK_BEHAVIORS_KEEP_ALL
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/backlight.h>
-
 / {
     keymap {
         compatible = "zmk,keymap";

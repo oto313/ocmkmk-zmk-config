@@ -44,8 +44,11 @@
 
 /*
  * UART wired split — right (peripheral): connector pins 14 / 13 → P0.04 (TX) / P0.05 (RX)
- * Crossover to left: Right TX (pin 14) → Left RX (pin 4); Right RX (pin 13) → Left TX (pin 3)
+ * Crossover to left: Right TX (pin 14=P0.04) → Left RX (pin 4=P0.09);
+ *                   Right RX (pin 13=P0.05) → Left TX (pin 3=P0.20).
+ * Only included for wired builds (CONFIG_ZMK_BLE not set).
  */
+#if !defined(CONFIG_ZMK_BLE)
 &pinctrl {
     uart0_default: uart0_default {
         group1 {
@@ -64,3 +67,11 @@
         };
     };
 };
+
+&uart0 {
+    status = "okay";
+    pinctrl-0 = <&uart0_default>;
+    pinctrl-1 = <&uart0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+#endif

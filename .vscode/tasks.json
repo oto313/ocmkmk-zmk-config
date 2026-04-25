@@ -4,22 +4,7 @@
         {
             "label": "Build OCDMK Left",
             "type": "shell",
-            "command": "west",
-            "args": [
-                "build",
-                "-d",
-                "build_ocdmk_left",
-                "-s",
-                "${workspaceFolder}/zmk/app",
-                "-b",
-                "ocdmk_core",
-                "-S",
-                "studio-rpc-usb-uart",
-                "--",
-                "-DSHIELD=ocdmk_left",
-                "-DZMK_CONFIG=${workspaceFolder}",
-                "-DZMK_EXTRA_MODULES=${workspaceFolder}"
-            ],
+            "command": "west build -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder} -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -32,21 +17,7 @@
         {
             "label": "Build OCDMK Left (Pristine)",
             "type": "shell",
-            "command": "west",
-            "args": [
-                "build",
-                "-p",
-                "-d",
-                "build_ocdmk_left",
-                "-s",
-                "${workspaceFolder}/zmk/app",
-                "-b",
-                "ocdmk_core",
-                "--",
-                "-DSHIELD=ocdmk_left",
-                "-DZMK_CONFIG=${workspaceFolder}",
-                "-DZMK_EXTRA_MODULES=${workspaceFolder}"
-            ],
+            "command": "west build -p -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder} -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -81,22 +52,7 @@
         {
             "label": "Build OCDMK Right",
             "type": "shell",
-            "command": "west",
-            "args": [
-                "build",
-                "-d",
-                "build_ocdmk_right",
-                "-s",
-                "${workspaceFolder}/zmk/app",
-                "-b",
-                "ocdmk_core",
-                "-S",
-                "studio-rpc-usb-uart",
-                "--",
-                "-DSHIELD=ocdmk_right",
-                "-DZMK_CONFIG=${workspaceFolder}",
-                "-DZMK_EXTRA_MODULES=${workspaceFolder}"
-            ],
+            "command": "west build -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder} -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -127,8 +83,23 @@
             ],
             "dependsOrder": "sequence",
             "problemMatcher": []
-        },
+        }
+    ],
+
+    // =========================================================================
+    // BLUETOOTH TOGGLE — pick "BLE split" or "Wired (no BLE)" when prompted.
+    // Both halves use the same input so one pick applies to both.
+    // =========================================================================
+    "inputs": [
+        {
+            "id": "bleArg",
+            "type": "pickString",
+            "description": "Split transport (applies to both halves)",
+            "options": [
+                {"label": "Wired (no BLE)", "value": ""},
+                {"label": "BLE split",      "value": "-DCONFIG_ZMK_BLE=y"}
+            ],
+            "default": ""
+        }
     ]
 }
-
-

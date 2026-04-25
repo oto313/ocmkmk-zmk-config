@@ -10,19 +10,20 @@
 / {
     chosen {
         zmk,physical-layout = &default_layout;
-        zmk,kscan = &kscan;
-        zmk,matrix-transform = &default_transform;
     };
 
     /*
      * Wired split: UART between halves (pinctrl: left/right overlays).
-     * Without this node, only BLE split runs; peripheral then hits
-     * bt_gatt_notify → -ENOTCONN (-128) when not paired over BLE.
+     * Only compiled when CONFIG_ZMK_BLE is not set; the DT_HAS_ZMK_WIRED_SPLIT_ENABLED
+     * symbol produced by this node auto-selects CONFIG_ZMK_SPLIT_WIRED in Kconfig.
+     * For BLE builds (-DCONFIG_ZMK_BLE=y) this node is excluded so only BLE split runs.
      */
-    wired_split {
+#if !defined(CONFIG_ZMK_BLE)
+    wired_split: wired_split {
         compatible = "zmk,wired-split";
         device = <&ocdmk_core_serial>;
     };
+#endif
 
     /*
      * Charging Status LED Indicator
