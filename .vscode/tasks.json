@@ -4,7 +4,7 @@
         {
             "label": "Build OCDMK Left",
             "type": "shell",
-            "command": "west build -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core/nrf52833 -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -17,7 +17,7 @@
         {
             "label": "Build OCDMK Left (Pristine)",
             "type": "shell",
-            "command": "west build -p -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -p -d build_ocdmk_left -s ${workspaceFolder}/zmk/app -b ocdmk_core/nrf52833 -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_left -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -52,7 +52,7 @@
         {
             "label": "Build OCDMK Right",
             "type": "shell",
-            "command": "west build -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core -S studio-rpc-usb-uart -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core/nrf52833 -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -62,7 +62,7 @@
         {
             "label": "Build OCDMK Right (Pristine)",
             "type": "shell",
-            "command": "west build -p -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
+            "command": "west build -p -d build_ocdmk_right -s ${workspaceFolder}/zmk/app -b ocdmk_core/nrf52833 -- -DSHIELD=ocdmk_right -DZMK_CONFIG=${workspaceFolder}/config -DZMK_EXTRA_MODULES=${workspaceFolder} ${input:bleArg}",
             "options": {
                 "cwd": "${workspaceFolder}/zmk/app"
             },
@@ -113,6 +113,53 @@
                 "Create DFU Package (Right)"
             ],
             "dependsOrder": "parallel",
+            "problemMatcher": []
+        },
+        {
+            "label": "Download Bootloader",
+            "type": "shell",
+            "command": "test -f /tmp/bluemicro_nrf52833_bootloader-0.11.0_s140_7.2.0.hex && echo 'Bootloader already downloaded' || curl -L -o /tmp/bluemicro_nrf52833_bootloader-0.11.0_s140_7.2.0.hex https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/download/0.11.0/bluemicro_nrf52833_bootloader-0.11.0_s140_7.2.0.hex",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash Bootloader (J-Link)",
+            "type": "shell",
+            "command": "nrfjprog --program /tmp/bluemicro_nrf52833_bootloader-0.11.0_s140_7.2.0.hex --chiperase --verify -f NRF52 --reset",
+            "dependsOn": "Download Bootloader",
+            "problemMatcher": []
+        },
+        {
+            "label": "Download CI Firmware",
+            "type": "shell",
+            "command": "gh run download --repo oto313/ocmkmk-zmk-config --name firmware --dir /tmp/firmware_ci --force && echo 'Downloaded:' && ls /tmp/firmware_ci/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash Left BLE from CI",
+            "type": "shell",
+            "command": "cp /tmp/firmware_ci/ocdmk_left_ble.uf2 /Volumes/BLUEMICRO/",
+            "dependsOn": "Download CI Firmware",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash Right BLE from CI",
+            "type": "shell",
+            "command": "cp /tmp/firmware_ci/ocdmk_right_ble.uf2 /Volumes/BLUEMICRO/",
+            "dependsOn": "Download CI Firmware",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash Left Wired from CI",
+            "type": "shell",
+            "command": "cp /tmp/firmware_ci/ocdmk_left_wired.uf2 /Volumes/BLUEMICRO/",
+            "dependsOn": "Download CI Firmware",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash Right Wired from CI",
+            "type": "shell",
+            "command": "cp /tmp/firmware_ci/ocdmk_right_wired.uf2 /Volumes/BLUEMICRO/",
+            "dependsOn": "Download CI Firmware",
             "problemMatcher": []
         }
     ],

@@ -1,0 +1,7 @@
+/* Delete wired_split node for BLE builds */
+/delete-node/ &wired_split;
+
+/* Disable UART0 — not needed for BLE split */
+&uart0 {
+    status = "disabled";
+};

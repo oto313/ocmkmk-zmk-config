@@ -4,9 +4,9 @@
 
 #include "ocdmk.dtsi"
 
-/* Charging LED output for right side (mirrored: Pin 1 → Pin 11) */
+/* Indicator LED output for right side (mirrored: left pin 11 → right pin 1) */
 &charging_led {
-    led-gpios = <&ocdmk_core 11 GPIO_ACTIVE_HIGH>;  /* Pin 11: P0.11 */
+    led-gpios = <&ocdmk_core 1 GPIO_ACTIVE_HIGH>;  /* Pin 1: P0.15 */
 };
 
 &default_transform {

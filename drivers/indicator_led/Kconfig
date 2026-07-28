@@ -6,8 +6,8 @@ config INDICATOR_LED
     default y
     depends on GPIO
     help
-      Enable indicator LED driver that lights LED when
-      STAT1 AND STAT2 signals are both high.
+      Enable indicator LED driver.
+      Blinks on startup, blinks when battery < 20% and not charging.
 
 if INDICATOR_LED
 

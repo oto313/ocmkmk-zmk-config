@@ -15,7 +15,7 @@ Download the latest hex from [Adafruit nRF52 Bootloader releases](https://github
 
 **With nrfjprog:**
 ```sh
-nrfjprog --program bluemicro_nrf52833_bootloader-0.10.0_s140_7.2.0.hex \
+nrfjprog --program bluemicro_nrf52833_bootloader-0.11.0_s140_7.2.0.hex \
   --chiperase --verify -f NRF52 --reset
 ```
 
@@ -24,14 +24,14 @@ nrfjprog --program bluemicro_nrf52833_bootloader-0.10.0_s140_7.2.0.hex \
 JLinkExe -device nRF52833_xxAA -if SWD -speed 4000 -autoconnect 1 << 'EOF'
 h
 erase
-loadfile bluemicro_nrf52833_bootloader-0.10.0_s140_7.2.0.hex
+loadfile bluemicro_nrf52833_bootloader-0.11.0_s140_7.2.0.hex
 r
 g
 exit
 EOF
 ```
 
-After flashing, double-tap the reset button — the board mounts as a USB drive. Subsequent firmware updates use `west flash` (UF2).
+After flashing, double-tap the reset button — the board mounts as a USB drive (`BLUEMICRO`). Subsequent firmware updates use UF2.
 
 ## Building
 
@@ -75,11 +75,19 @@ west build -s zmk/app -d build/right_ble -b ocdmk_core/nrf52833 -- \
 
 ## Flashing Firmware
 
-Double-tap reset to enter UF2 bootloader mode, then:
+Double-tap reset to enter UF2 bootloader mode — the board mounts as `BLUEMICRO`.
 
+**Option A: copy UF2 manually**
+```sh
+cp ocdmk_left_wired.uf2 /Volumes/BLUEMICRO/
+```
+
+**Option B: west flash (after building)**
 ```sh
 west flash -d build/left      # wired left
 west flash -d build/right     # wired right
 west flash -d build/left_ble  # BLE left
 west flash -d build/right_ble # BLE right
 ```
+
+The drive unmounts automatically and the board reboots into the new firmware.

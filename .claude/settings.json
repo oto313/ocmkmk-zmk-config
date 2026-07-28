@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "zephyr-skills@zephyr-agent-skills": true
+  }
+}

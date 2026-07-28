@@ -28,3 +28,4 @@ include:
     shield: ocdmk_right
     cmake-args: -DCONFIG_ZMK_BLE=y -DCONFIG_ZMK_SPLIT_WIRED=n
     artifact-name: ocdmk_right_ble
+

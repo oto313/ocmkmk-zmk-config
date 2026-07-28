@@ -4,9 +4,9 @@
 
 #include "ocdmk.dtsi"
 
-/* Charging LED output for left side */
+/* Indicator LED output for left side */
 &charging_led {
-    led-gpios = <&ocdmk_core 11 GPIO_ACTIVE_HIGH>;  /* Pin 1: P0.15 */
+    led-gpios = <&ocdmk_core 11 GPIO_ACTIVE_HIGH>;  /* Pin 11: P0.11 */
 };
 
 &kscan {
