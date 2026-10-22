@@ -29,11 +29,13 @@
      * Charging Status LED Indicator
      * STAT1/STAT2 from ocdmk_charger nexus (defined in ocdmk_core_pins.dtsi)
      * led-gpios is overridden in left/right overlays due to PCB mirroring
+     * STAT pins are open-drain with no external pull-ups on the PCB, so the
+     * internal pull-ups are required (otherwise they float and read 0).
      */
     charging_led: charging_indicator {
         compatible = "zmk,indicator-led";
-        stat1-gpios = <&ocdmk_charger 0 GPIO_ACTIVE_HIGH>;  /* STAT1: P0.00 */
-        stat2-gpios = <&ocdmk_charger 1 GPIO_ACTIVE_HIGH>;  /* STAT2: P0.31 */
+        stat1-gpios = <&ocdmk_charger 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;  /* STAT1: P0.00 */
+        stat2-gpios = <&ocdmk_charger 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;  /* STAT2: P0.31 */
         /* led-gpios defined in left/right overlays */
     };
 

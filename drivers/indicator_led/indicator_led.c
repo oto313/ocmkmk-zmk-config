@@ -82,8 +82,11 @@ static bool is_charging(const struct indicator_led_config *config)
         return false;
     }
 
-    /* BQ25185: STAT1=0 AND STAT2=0 means charging in progress */
-    return (stat1 == 0 && stat2 == 0);
+    /*
+     * BQ25185 open-drain STAT pins (pulled up): STAT1=1, STAT2=0 means charge
+     * in progress. Both high = charge complete / no input power.
+     */
+    return (stat1 == 1 && stat2 == 0);
 }
 
 static void battery_check_handler(struct k_work *work)
@@ -168,6 +171,7 @@ static int indicator_led_init(const struct device *dev)
         return -ENODEV;
     }
 
+    /* GPIO_INPUT is OR'ed with the DT flags, so the pull-up from DTS applies */
     ret = gpio_pin_configure_dt(&config->stat1_gpio, GPIO_INPUT);
     if (ret < 0) {
         LOG_ERR("Failed to configure STAT1 GPIO: %d", ret);

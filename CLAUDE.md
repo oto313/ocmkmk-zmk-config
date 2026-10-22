@@ -187,7 +187,7 @@ Two mutually exclusive transport modes are supported, selected at build time via
 
 Located in `drivers/indicator_led/`. A Zephyr GPIO driver (`zmk,indicator-led` compatible) that:
 - Blinks LED 3× on startup
-- Solid LED on while charging (BQ25185 STAT1=0 AND STAT2=0)
+- Solid LED on while charging (BQ25185 STAT1=1 AND STAT2=0; STAT pins are open-drain, internal pull-ups enabled in DTS since the PCB has none)
 - Blinks LED when battery < 20% and not charging
 - LED off when battery OK and not charging
 
