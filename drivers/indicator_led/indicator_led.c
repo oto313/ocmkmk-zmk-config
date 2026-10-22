@@ -99,16 +99,19 @@ static void battery_check_handler(struct k_work *work)
 
     if (charging) {
         /* Charging: LED solid on */
+        LOG_INF("LED ON: charging (battery %d%%)", pct);
         data->blink_state = false;
         gpio_pin_set_dt(&config->led_gpio, 1);
         k_work_reschedule(&data->battery_work, K_SECONDS(BATTERY_CHECK_INTERVAL_S));
     } else if (pct >= 0 && pct < LOW_BATTERY_THRESHOLD) {
         /* Low battery and not charging: blink */
+        LOG_INF("LED BLINK: low battery (%d%%)", pct);
         data->blink_state = !data->blink_state;
         gpio_pin_set_dt(&config->led_gpio, data->blink_state);
         k_work_reschedule(&data->battery_work, K_MSEC(BLINK_INTERVAL_MS));
     } else {
         /* Battery OK, not charging: LED off, check again later */
+        LOG_INF("LED OFF: not charging, battery %d%%", pct);
         data->blink_state = false;
         gpio_pin_set_dt(&config->led_gpio, 0);
         k_work_reschedule(&data->battery_work, K_SECONDS(BATTERY_CHECK_INTERVAL_S));
